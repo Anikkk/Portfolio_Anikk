@@ -1,0 +1,12 @@
+<svg width="280" height="160" viewBox="0 0 280 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="280" height="160" rx="24" fill="url(#paint0_radial_abc)"/>
+  <path d="M36 108C58 70 82 40 112 40C142 40 170 76 188 100C206 124 230 136 244 108" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+  <circle cx="112" cy="40" r="9" fill="#4ADE80"/>
+  <text x="36" y="136" fill="white" font-size="28" font-family="'Inter', 'Segoe UI', sans-serif" font-weight="600">Applied Bell Curve</text>
+  <defs>
+    <radialGradient id="paint0_radial_abc" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(70 -6) rotate(45) scale(220 220)">
+      <stop stop-color="#6EE7B7" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#1E293B"/>
+    </radialGradient>
+  </defs>
+</svg>

@@ -1,0 +1,9 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* small body base so font looks clean on dark */
+body {
+  @apply bg-[#071027] text-slate-200;
+}

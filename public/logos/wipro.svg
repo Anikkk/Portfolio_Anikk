@@ -1,0 +1,15 @@
+<svg width="280" height="160" viewBox="0 0 280 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="280" height="160" rx="24" fill="#111827"/>
+  <g transform="translate(40 32)">
+    <circle cx="60" cy="48" r="46" stroke="url(#paint0_linear_wipro)" stroke-width="12" fill="none" stroke-dasharray="24 18"/>
+    <circle cx="60" cy="48" r="12" fill="#34D399"/>
+    <text x="110" y="56" fill="white" font-size="40" font-family="'Inter', 'Segoe UI', sans-serif" font-weight="700">wipro</text>
+  </g>
+  <defs>
+    <linearGradient id="paint0_linear_wipro" x1="14" y1="2" x2="106" y2="94" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#60A5FA"/>
+      <stop offset="0.5" stop-color="#A855F7"/>
+      <stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+  </defs>
+</svg>
