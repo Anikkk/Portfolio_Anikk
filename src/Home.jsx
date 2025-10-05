@@ -29,8 +29,10 @@ const EXPERIENCE = [
     role: 'ML Intern',
     company: 'Velocity.AI',
     date: 'June 2025 - Aug 2025',
-    logo: '/logos/wipro.svg',
-    logoAlt: 'Wipro logo',
+    logo: '/logos/velocity_road.jpeg',
+      logoAlt: 'Velocity.AI logo',
+      handle: 'velocityroad.ai',
+      website: 'https://www.velocityroad.com/',
       recommendation: {
         label: 'Recommendation Letter',
         href: '/images/AniketKumar_RecommendationLetter.pdf'
@@ -43,8 +45,10 @@ const EXPERIENCE = [
     role: 'Full Stack Developer & ML Engineer',
     company: 'Applied Bell Curve',
     date: 'Feb 2023 - Aug 2024',
-    logo: '/logos/applied-bell-curve.svg',
+    logo: '/logos/ABC.png',
     logoAlt: 'Applied Bell Curve logo',
+  handle: 'appliedbellcurve.com',
+  website: 'https://appliedbellcurve.com',
     bullets: [
       'Time Series Forecasting:[Supervised Learning, AWS] Designed and deployed a multi-model ML pipeline on AWS to predict seasonal cotton prices with 95% accuracy, enabling optimized purchasing strategies and saving $2.1M annually.',
       'Containerization:[Kubernetes, Docker, Helm, Prometheus, Grafana, Distributed Systems, Fault Tolerant] Migrated 80% of applications to containers, reducing deployment errors by 50% and tripling release frequency, while implementing an observability platform for 100+ microservices that cut MTTR from 45 minutes to under 5 minutes.',
@@ -57,6 +61,8 @@ const EXPERIENCE = [
     date: 'Aug 2020 - Nov 2023',
     logo: '/logos/wipro.svg',
     logoAlt: 'Wipro logo',
+  handle: 'wipro.com',
+  website: 'https://www.wipro.com',
     bullets: [
       'ETL Modernization:[Pipeline Automation, Azure Data Factory, Azure Synapse, Airflow] Migrated legacy ETL workflows to Azure-native frameworks, orchestrating pipelines with Airflow and loading into Azure Synapse, improving data availability and reducing downtime by 60%',
       'Data Pipeline Optimization:[Data Modeling, Parquet, Indexing Strategy] Introduced an indexing strategy to optimize Parquet queries, cutting query latency by 60% and increasing data pipeline throughput by 45%.',
@@ -69,6 +75,7 @@ export default function Home() {
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(true);
   const [portraitStatus, setPortraitStatus] = useState('loading');
+  const [activeExperience, setActiveExperience] = useState(0);
 
   useEffect(() => {
     const img = new Image();
@@ -81,6 +88,7 @@ export default function Home() {
   const heroVariant = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
   const cardVariant = { hidden: { opacity: 0, y: 20 }, visible: (i=0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.12 } }) };
   const hasPortrait = portraitStatus === 'ready';
+  const activeExperienceData = EXPERIENCE[activeExperience];
 
   return (
     <div className={`min-h-screen ${dark ? 'bg-[#071027] text-slate-200' : 'bg-white text-slate-900'}`}>
@@ -230,66 +238,99 @@ export default function Home() {
         </section>
 
         <section id="experience" className="max-w-6xl mx-auto px-6 py-12">
-          <motion.h2 initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} className="text-3xl font-bold text-white mb-6">Where I’ve worked</motion.h2>
+          <motion.h2 initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} className="text-3xl font-bold text-white mb-10">Where I’ve worked</motion.h2>
 
-          <div className="space-y-6">
-            {EXPERIENCE.map((e, i) => (
-              <motion.div
-                key={i}
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                variants={cardVariant}
-                viewport={{ once: true }}
-                className="relative overflow-hidden group bg-[#061226] border border-white/6 rounded-2xl p-6 shadow-lg transition duration-500"
-              >
-                {e.logo && (
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500"
+          <div className="grid lg:grid-cols-[260px_1fr] gap-8">
+            <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-3 lg:pb-0 snap-x">
+              {EXPERIENCE.map((exp, idx) => {
+                const isActive = idx === activeExperience;
+                return (
+                  <button
+                    type="button"
+                    key={exp.company}
+                    onClick={() => setActiveExperience(idx)}
+                    aria-pressed={isActive}
+                    className={`relative snap-start rounded-xl border transition-all duration-300 px-4 py-3 text-left backdrop-blur-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/80 ${isActive ? 'border-emerald-400/70 bg-emerald-400/10 shadow-[0_0_0_1px_rgba(16,_185,_129,_0.35)]' : 'border-white/10 bg-white/5 hover:border-emerald-300/40 hover:bg-emerald-300/5'}`}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-transparent to-indigo-500/10"></div>
-                    <div className="absolute inset-0 bg-[#061226]/88"></div>
-                    <div className="absolute inset-4 sm:inset-6 md:inset-8 rounded-2xl overflow-hidden flex items-center justify-center">
-                      <img
-                        src={e.logo}
-                        alt={e.logoAlt || `${e.company} logo`}
-                        className="max-w-full max-h-full object-contain mix-blend-screen transition duration-700 scale-95 group-hover:scale-100"
-                      />
+                    <div className="flex items-center justify-between gap-4">
+                      <div>
+                        <p className={`text-sm font-semibold tracking-wide uppercase ${isActive ? 'text-emerald-200' : 'text-slate-300/80'}`}>{exp.company}</p>
+                        {exp.handle && <p className="text-xs text-slate-400/80 mt-1">{exp.handle}</p>}
+                      </div>
+                      <span className={`inline-flex h-2 w-2 rounded-full ${isActive ? 'bg-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.6)]' : 'bg-emerald-300/40'}`}></span>
                     </div>
-                  </div>
-                )}
+                  </button>
+                );
+              })}
+            </div>
 
-                <div className="relative z-10">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <h3 className="text-xl font-semibold text-emerald-300">{e.role}</h3>
-                      <p className="text-sm text-slate-300">{e.company} • {e.date}</p>
-                    </div>
-                    {e.recommendation ? (
+            <motion.div
+              key={activeExperience}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35 }}
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#061226]/85 p-6 md:p-10 transition duration-500 hover:border-emerald-300/40"
+            >
+              {activeExperienceData.logo && (
+                <div className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100">
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/12 via-transparent to-indigo-500/20"></div>
+                  <div className="absolute inset-0 bg-[#020c20]/80 backdrop-blur-sm"></div>
+                  <img
+                    src={activeExperienceData.logo}
+                    alt={activeExperienceData.logoAlt || `${activeExperienceData.company} logo`}
+                    className="absolute inset-0 h-full w-full object-contain object-center opacity-50 mix-blend-screen md:opacity-60"
+                  />
+                </div>
+              )}
+
+              <div className="relative z-10 space-y-6">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.4em] text-emerald-200/70">Featured Role</p>
+                    <h3 className="mt-2 text-2xl font-semibold text-emerald-200">{activeExperienceData.role}</h3>
+                    <p className="mt-2 text-sm text-slate-300">
                       <a
-                        href={e.recommendation.href}
+                        href={activeExperienceData.website}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-300/40 text-xs font-medium uppercase tracking-[0.2em] text-emerald-200 hover:bg-emerald-400/10 transition"
+                        className="inline-flex items-center gap-2 text-emerald-300 hover:text-emerald-200 transition"
                       >
-                        <span>{e.recommendation.label}</span>
+                        {activeExperienceData.company}
                         <ExternalLink size={14} />
                       </a>
-                    ) : (
-                      <div className="text-sm opacity-60">•</div>
-                    )}
+                      <span className="mx-2 text-slate-500">•</span>
+                      {activeExperienceData.date}
+                    </p>
                   </div>
 
-                            <ul
-                              className="mt-4 list-disc list-inside text-slate-300/90 space-y-2 text-sm md:text-[0.95rem] font-light leading-relaxed tracking-[0.01em]"
-                              style={{ fontFamily: "'Kalam', 'Bradley Hand', 'Comic Sans MS', cursive" }}
-                            >
-                    {e.bullets.map((b, idx) => <li key={idx}>{b}</li>)}
-                  </ul>
+                  {activeExperienceData.recommendation && (
+                    <a
+                      href={activeExperienceData.recommendation.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-2 self-start rounded-full border border-emerald-300/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-emerald-200 hover:bg-emerald-400/10 transition"
+                    >
+                      <span>{activeExperienceData.recommendation.label}</span>
+                      <ExternalLink size={14} />
+                    </a>
+                  )}
                 </div>
-              </motion.div>
-            ))}
+
+                <div className="space-y-4 text-slate-200/90">
+                  {activeExperienceData.bullets.map((bullet, idx) => (
+                    <div
+                      key={idx}
+                      className="group relative rounded-2xl border border-white/5 bg-white/[0.03] px-5 py-4 transition hover:border-emerald-300/30 hover:bg-emerald-300/10"
+                    >
+                      <div className="absolute left-3 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.6)]"></div>
+                      <p className="pl-5 text-sm md:text-[0.95rem] leading-relaxed tracking-[0.01em]" style={{ fontFamily: "'Inter', 'Segoe UI', sans-serif" }}>
+                        {bullet}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
 
