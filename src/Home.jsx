@@ -31,6 +31,10 @@ const EXPERIENCE = [
     date: 'June 2025 - Aug 2025',
     logo: '/logos/wipro.svg',
     logoAlt: 'Wipro logo',
+      recommendation: {
+        label: 'Recommendation Letter',
+        href: '/images/AniketKumar_RecommendationLetter.pdf'
+      },
     bullets: [
       'Workflow Automation:[n8n, LLMs, RAG] Automated meeting-transcript workflows with n8n, LLMs, and RAG, generating summaries, statements of work, and client proposals to streamline negotiations and help mid-scale enterprises adopt AI solutions.'
     ]
@@ -257,17 +261,29 @@ export default function Home() {
                 )}
 
                 <div className="relative z-10">
-                  <div className="flex items-start justify-between">
+                  <div className="flex items-start justify-between gap-4">
                     <div>
                       <h3 className="text-xl font-semibold text-emerald-300">{e.role}</h3>
                       <p className="text-sm text-slate-300">{e.company} • {e.date}</p>
                     </div>
-                    <div className="text-sm opacity-60">•</div>
+                    {e.recommendation ? (
+                      <a
+                        href={e.recommendation.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-300/40 text-xs font-medium uppercase tracking-[0.2em] text-emerald-200 hover:bg-emerald-400/10 transition"
+                      >
+                        <span>{e.recommendation.label}</span>
+                        <ExternalLink size={14} />
+                      </a>
+                    ) : (
+                      <div className="text-sm opacity-60">•</div>
+                    )}
                   </div>
 
                             <ul
                               className="mt-4 list-disc list-inside text-slate-300/90 space-y-2 text-sm md:text-[0.95rem] font-light leading-relaxed tracking-[0.01em]"
-                              style={{ fontFamily: "'Pacifico', cursive" }}
+                              style={{ fontFamily: "'Kalam', 'Bradley Hand', 'Comic Sans MS', cursive" }}
                             >
                     {e.bullets.map((b, idx) => <li key={idx}>{b}</li>)}
                   </ul>
