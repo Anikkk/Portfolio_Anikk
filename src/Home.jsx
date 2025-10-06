@@ -24,6 +24,8 @@ const PROJECTS = [
   },
 ];
 
+const RESUME_PDF = '/images/Aniket_Kumar_Resume_2025.pdf';
+
 const EXPERIENCE = [
     {
     role: 'ML Intern',
@@ -232,7 +234,7 @@ export default function Home() {
                   )}
                 </div>
               </div>
-              <p className="mt-5 text-xs text-slate-400/80 text-center">Tip: export a 4:5 portrait for the sharpest fit.</p>
+              {/* <p className="mt-5 text-xs text-slate-400/80 text-center">Tip: export a 4:5 portrait for the sharpest fit.</p> */}
             </motion.div>
           </div>
         </section>
@@ -373,6 +375,72 @@ export default function Home() {
         </section>
 
       </main>
+
+      <section id="resume" className="max-w-6xl mx-auto px-6 pb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#08122d] via-[#071129] to-[#050b1f] px-6 py-10 md:px-12 md:py-14 shadow-[0_40px_70px_-30px_rgba(8,15,39,0.8)]"
+        >
+          <div className="flex flex-col gap-10 lg:flex-row lg:items-start">
+            <div className="space-y-6 lg:w-1/3">
+              <div>
+                <p className="text-xs uppercase tracking-[0.45em] text-emerald-200/80">Resume</p>
+                <h2 className="mt-3 text-3xl font-semibold text-white">Download the full story</h2>
+                <p className="mt-3 text-sm leading-relaxed text-slate-300/90">
+                  Review the embedded preview or grab a copy to keep. The PDF lives alongside the site assets so it stays in sync with the portfolio.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-4">
+                <a
+                  href={RESUME_PDF}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-3 rounded-full border border-emerald-300/40 px-6 py-2.5 text-sm font-semibold uppercase tracking-[0.35em] text-emerald-200 transition hover:bg-emerald-400/10"
+                >
+                  <DownloadCloud size={18} />
+                  <span>Open Resume</span>
+                </a>
+
+                <a
+                  href={RESUME_PDF}
+                  download
+                  className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.35em] text-slate-400 transition hover:text-emerald-200"
+                >
+                  <span>Save PDF</span>
+                  <ExternalLink size={14} />
+                </a>
+              </div>
+            </div>
+
+            <div className="relative flex-1">
+              <div className="absolute -top-10 -right-8 h-48 w-48 rounded-full bg-emerald-400/15 blur-3xl"></div>
+              <div className="absolute -bottom-12 -left-10 h-56 w-56 rounded-full bg-indigo-500/10 blur-3xl"></div>
+
+              <div className="relative overflow-hidden rounded-[28px] border border-white/12 bg-slate-950/90 shadow-2xl">
+                <iframe
+                  title="Aniket Kumar Resume"
+                  src={`${RESUME_PDF}#toolbar=0&navpanes=0&view=FitH`}
+                  loading="lazy"
+                  className="hidden w-full lg:block lg:h-[620px]"
+                ></iframe>
+                <iframe
+                  title="Aniket Kumar Resume"
+                  src={`${RESUME_PDF}#toolbar=0&navpanes=0&view=FitV`}
+                  loading="lazy"
+                  className="block w-full lg:hidden h-[70vh]"
+                ></iframe>
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-6 text-center text-xs font-medium text-slate-200/80 lg:hidden">
+                  Tap above to open the resume in a dedicated tab for the clearest view.
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
 
       <footer className="py-10">
         <div className="max-w-6xl mx-auto px-6 text-center text-sm text-slate-400">© {new Date().getFullYear()} Aniket Kumar — Built with React & Framer Motion</div>
