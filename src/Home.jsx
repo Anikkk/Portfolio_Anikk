@@ -1,56 +1,92 @@
 // src/Home.jsx
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Github, Linkedin, DownloadCloud, Menu, X, ExternalLink } from 'lucide-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Github, Linkedin, DownloadCloud, Menu, X, ExternalLink, BookOpen } from 'lucide-react';
 import { Card, CardContent } from './components/ui/card';
+import TacoDBCaseStudy from './components/TacoDBCaseStudy';
+import TherapyAICaseStudy from './components/TherapyAICaseStudy';
+import AskDBCaseStudy from './components/AskDBCaseStudy';
 
 const PORTRAIT_SRC = '/images/profile_pic.jpg';
 
 const PROJECTS = [
-  
-{
-    title: '3D Mario Portfolio',
-    desc: 'Interactive 3D portfolio built with Three.js & React',
-    image: '/images/mario_portfolio.png',
+  {
+    title: 'Taco DB',
+    desc: 'Implemented a single threaded RDBMS. Implemented all the components in a bottom-up way which included file interface based on Linux I/O syscall, buffer manager, schema, record layout, data layout, access methods, heap file(table interface), indexing(b-tree), query processing(relational operators, join, external sorting) and query optimization(manually optimising query plan).',
+    image: '/images/database.png',
     github: 'https://github.com/Anikkk/mario-portfolio',
-    demo: 'https://yourdomain.com/mario'
+    demo: 'https://yourdomain.com/mario',
+    category: 'general',
+    caseStudy: {
+      label: 'Case Study',
+      component: TacoDBCaseStudy
+    }
+  },
+  {
+    title: 'Therapy.ai',
+    desc: 'Built a multilingual, HIPAA-aware mental health companion with empathetic LLM conversations, crisis response, and lifelike avatar interactions.',
+    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80',
+    github: 'https://github.com/NidhiChoudhary7/Therapy.ai',
+    demo: 'https://devpost.com/software/harmoni-ai',
+    category: 'ai-ml',
+    caseStudy: {
+      label: 'Case Study',
+      component: TherapyAICaseStudy
+    }
+  },
+  {
+    title: 'AskDB',
+    desc: 'Developed an AI agent that turns natural language into optimized queries across LangChain, Neo4j, RAG, FastAPI, ChromaDB, MongoDB, Azure SQL, Redis, and ReactJS—powering 50+ non-technical teammates and cutting report creation time by 75%.',
+    image: 'https://images.unsplash.com/photo-1526378722484-cc5c51000c89?auto=format&fit=crop&w=1200&q=80',
+    category: 'ai-ml',
+    caseStudy: {
+      label: 'Case Study',
+      component: AskDBCaseStudy
+    }
   },
   {
     title: 'Price Forecasting Dashboard',
     desc: 'End-to-end ML dashboard for commodity forecasting',
     image: '/images/dashboard.png',
+    category: 'ai-ml',
     github: 'https://github.com/Anikkk/forecast-dashboard',
     demo: 'https://yourdomain.com/dashboard'
-  },
+  }
+];
+
+const PROJECT_CATEGORIES = [
+  { key: 'all', label: 'All Projects' },
+  { key: 'ai-ml', label: 'AI/ML Projects' },
+  { key: 'general', label: 'General Projects' }
 ];
 
 const RESUME_PDF = '/images/Aniket_Kumar_Resume_2025.pdf';
 
 const EXPERIENCE = [
-    {
+  {
     role: 'ML Intern',
     company: 'Velocity.AI',
     date: 'June 2025 - Aug 2025',
     logo: '/logos/velocity_road.jpeg',
-      logoAlt: 'Velocity.AI logo',
-      handle: 'velocityroad.ai',
-      website: 'https://www.velocityroad.com/',
-      recommendation: {
-        label: 'Recommendation Letter',
-        href: '/images/AniketKumar_RecommendationLetter.pdf'
-      },
+    logoAlt: 'Velocity.AI logo',
+    handle: 'velocityroad.ai',
+    website: 'https://www.velocityroad.com/',
+    recommendation: {
+      label: 'Recommendation Letter',
+      href: '/images/AniketKumar_RecommendationLetter.pdf'
+    },
     bullets: [
       'Workflow Automation:[n8n, LLMs, RAG] Automated meeting-transcript workflows with n8n, LLMs, and RAG, generating summaries, statements of work, and client proposals to streamline negotiations and help mid-scale enterprises adopt AI solutions.'
     ]
   },
   {
-    role: 'Full Stack Developer & ML Engineer',
+    role: 'Senior Software Engineer-2',
     company: 'Applied Bell Curve',
     date: 'Feb 2023 - Aug 2024',
     logo: '/logos/ABC.png',
     logoAlt: 'Applied Bell Curve logo',
-  handle: 'appliedbellcurve.com',
-  website: 'https://appliedbellcurve.com',
+    handle: 'appliedbellcurve.com',
+    website: 'https://appliedbellcurve.com',
     bullets: [
       'Time Series Forecasting:[Supervised Learning, AWS] Designed and deployed a multi-model ML pipeline on AWS to predict seasonal cotton prices with 95% accuracy, enabling optimized purchasing strategies and saving $2.1M annually.',
       'Containerization:[Kubernetes, Docker, Helm, Prometheus, Grafana, Distributed Systems, Fault Tolerant] Migrated 80% of applications to containers, reducing deployment errors by 50% and tripling release frequency, while implementing an observability platform for 100+ microservices that cut MTTR from 45 minutes to under 5 minutes.',
@@ -63,8 +99,8 @@ const EXPERIENCE = [
     date: 'Aug 2020 - Nov 2023',
     logo: '/logos/wipro.svg',
     logoAlt: 'Wipro logo',
-  handle: 'wipro.com',
-  website: 'https://www.wipro.com',
+    handle: 'wipro.com',
+    website: 'https://www.wipro.com',
     bullets: [
       'ETL Modernization:[Pipeline Automation, Azure Data Factory, Azure Synapse, Airflow] Migrated legacy ETL workflows to Azure-native frameworks, orchestrating pipelines with Airflow and loading into Azure Synapse, improving data availability and reducing downtime by 60%',
       'Data Pipeline Optimization:[Data Modeling, Parquet, Indexing Strategy] Introduced an indexing strategy to optimize Parquet queries, cutting query latency by 60% and increasing data pipeline throughput by 45%.',
@@ -78,6 +114,19 @@ export default function Home() {
   const [dark, setDark] = useState(true);
   const [portraitStatus, setPortraitStatus] = useState('loading');
   const [activeExperience, setActiveExperience] = useState(0);
+  const [activeCaseStudy, setActiveCaseStudy] = useState(null);
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [shuffledProjects, setShuffledProjects] = useState(PROJECTS);
+
+  const filteredProjects = useMemo(() => {
+    if (activeCategory === 'all') return PROJECTS;
+    return PROJECTS.filter(project => project.category === activeCategory);
+  }, [activeCategory]);
+
+  useEffect(() => {
+    const randomized = [...filteredProjects].sort(() => Math.random() - 0.5);
+    setShuffledProjects(randomized);
+  }, [filteredProjects]);
 
   useEffect(() => {
     const img = new Image();
@@ -86,11 +135,43 @@ export default function Home() {
     img.onerror = () => setPortraitStatus('error');
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setActiveCaseStudy(null);
+      }
+    };
+
+    if (activeCaseStudy) {
+      window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [activeCaseStudy]);
+
+  const handleOpenCaseStudy = (project) => {
+    if (project.caseStudy?.component) {
+      setActiveCaseStudy({
+        title: project.title,
+        Component: project.caseStudy.component,
+        label: project.caseStudy.label || 'Case Study'
+      });
+    }
+  };
+
+  const handleCloseCaseStudy = () => setActiveCaseStudy(null);
+
   const navVariant = { hidden: { y: -30, opacity: 0 }, visible: { y: 0, opacity: 1 } };
   const heroVariant = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } };
-  const cardVariant = { hidden: { opacity: 0, y: 20 }, visible: (i=0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.12 } }) };
   const hasPortrait = portraitStatus === 'ready';
   const activeExperienceData = EXPERIENCE[activeExperience];
+  const CaseStudyComponent = activeCaseStudy?.Component;
 
   return (
     <div className={`min-h-screen ${dark ? 'bg-[#071027] text-slate-200' : 'bg-white text-slate-900'}`}>
@@ -193,16 +274,6 @@ export default function Home() {
                 When I'm not coding, you'll find me exploring new coffee spots or sketching interface ideas in my notebook.
               </p>
 
-              {/* <div className="grid sm:grid-cols-2 gap-4 pt-4">
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <p className="text-sm uppercase tracking-wide text-emerald-300">Core Focus</p>
-                  <p className="mt-3 text-sm text-slate-200 leading-relaxed">Cloud-native microservices, ML-driven insights, and resilient frontend platforms.</p>
-                </div>
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <p className="text-sm uppercase tracking-wide text-emerald-300">Skills</p>
-                  <p className="mt-3 text-sm text-slate-200 leading-relaxed">Java • Spring Boot • React • Python • Azure • PostgreSQL • Tailwind</p>
-                </div>
-              </div> */}
             </motion.div>
 
             <motion.div initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.55 }} className="relative">
@@ -339,22 +410,75 @@ export default function Home() {
         <section id="projects" className="max-w-6xl mx-auto px-6 py-12">
           <motion.h2 initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} className="text-3xl font-bold text-white mb-6">Projects</motion.h2>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {PROJECTS.map((p, i) => (
-              <motion.div key={i} custom={i} initial="hidden" whileInView="visible" variants={cardVariant} viewport={{ once: true }} whileHover={{ scale: 1.02 }} className="relative">
+          <div className="mb-8 flex flex-wrap gap-3">
+            {PROJECT_CATEGORIES.map(category => {
+              const isActive = activeCategory === category.key;
+              return (
+                <button
+                  key={category.key}
+                  type="button"
+                  onClick={() => setActiveCategory(category.key)}
+                  className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] transition ${isActive ? 'border-emerald-400/70 bg-emerald-400/15 text-emerald-200 shadow-[0_0_0_1px_rgba(16,185,129,0.35)]' : 'border-white/15 bg-white/5 text-slate-300 hover:border-emerald-300/50 hover:text-emerald-200'}`}
+                >
+                  <span>{category.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <motion.div layout className="grid md:grid-cols-2 gap-8">
+            <AnimatePresence mode="popLayout">
+            {shuffledProjects.map((p, i) => {
+              const hasCaseStudy = Boolean(p.caseStudy?.component);
+              return (
+              <motion.div
+                key={p.title}
+                layout
+                custom={i}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -24 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className="relative"
+              >
                 <Card className="border border-white/6 shadow-lg">
                   <div className="relative h-56 bg-gradient-to-br from-slate-700 to-slate-800">
                     <img src={p.image} alt={p.title} className="w-full h-full object-cover opacity-90" />
 
                     <motion.div initial={{ opacity: 0 }} whileHover={{ opacity: 1 }} className="absolute inset-0 bg-black/50 flex items-center justify-center gap-4">
-                      {p.github && (
-                        <a href={p.github} target="_blank" rel="noreferrer" className="p-3 rounded-full bg-white/6 hover:bg-emerald-400/90 transition">
-                          <Github size={20} />
-                        </a>
+                      {hasCaseStudy && (
+                        <button
+                          type="button"
+                          onClick={() => handleOpenCaseStudy(p)}
+                          className="p-3 rounded-full bg-white/6 hover:bg-emerald-400/90 transition text-slate-100"
+                          aria-label={`${p.title} case study`}
+                          title="Open case study"
+                        >
+                          <BookOpen size={20} />
+                        </button>
                       )}
                       {p.demo && (
-                        <a href={p.demo} target="_blank" rel="noreferrer" className="p-3 rounded-full bg-white/6 hover:bg-emerald-400/90 transition">
+                        <a
+                          href={p.demo}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="p-3 rounded-full bg-white/6 hover:bg-emerald-400/90 transition"
+                          aria-label={`${p.title} live demo`}
+                          title="Open live demo"
+                        >
                           <ExternalLink size={20} />
+                        </a>
+                      )}
+                      {p.github && (
+                        <a
+                          href={p.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="p-3 rounded-full bg-white/6 hover:bg-emerald-400/90 transition"
+                          aria-label={`${p.title} source code`}
+                          title="View source code"
+                        >
+                          <Github size={20} />
                         </a>
                       )}
                     </motion.div>
@@ -365,13 +489,49 @@ export default function Home() {
                       <div>
                         <h3 className="text-lg font-semibold text-white">{p.title}</h3>
                         <p className="text-sm text-slate-300 mt-2">{p.desc}</p>
+                        <div className="mt-4 flex flex-wrap items-center gap-3 text-xs font-medium uppercase tracking-[0.25em] text-slate-400/80">
+                          {hasCaseStudy && (
+                            <button
+                              type="button"
+                              onClick={() => handleOpenCaseStudy(p)}
+                              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 transition hover:border-emerald-300/50 hover:text-emerald-200"
+                            >
+                              <BookOpen size={14} />
+                              <span>{p.caseStudy?.label || 'Case Study'}</span>
+                            </button>
+                          )}
+                          {p.demo && (
+                            <a
+                              href={p.demo}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 transition hover:border-emerald-300/50 hover:text-emerald-200"
+                            >
+                              <ExternalLink size={14} />
+                              <span>Live Demo</span>
+                            </a>
+                          )}
+                          {p.github && (
+                            <a
+                              href={p.github}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 transition hover:border-emerald-300/50 hover:text-emerald-200"
+                            >
+                              <Github size={14} />
+                              <span>Code</span>
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
               </motion.div>
-            ))}
-          </div>
+            );
+            })}
+            </AnimatePresence>
+          </motion.div>
         </section>
 
         <section id="resume" className="max-w-6xl mx-auto px-6 pb-16">
@@ -437,6 +597,54 @@ export default function Home() {
         </section>
 
       </main>
+
+      <AnimatePresence>
+        {activeCaseStudy && CaseStudyComponent && (
+          <motion.div
+            key="case-study-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-black/70 backdrop-blur-sm px-3 py-10"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="case-study-heading"
+            onClick={handleCloseCaseStudy}
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 12 }}
+              transition={{ duration: 0.25 }}
+              className="relative flex h-full max-h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#060f24]/95 shadow-[0_80px_120px_rgba(2,6,23,0.8)]"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 bg-white/5 px-6 py-4">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.35em] text-emerald-200/80">{activeCaseStudy.label}</p>
+                  <h2 id="case-study-heading" className="mt-1 text-xl font-semibold text-white md:text-2xl">
+                    {activeCaseStudy.title}
+                  </h2>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleCloseCaseStudy}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-slate-200 transition hover:border-emerald-300/50 hover:text-emerald-200"
+                >
+                  <span>Close</span>
+                  <X size={16} />
+                </button>
+              </div>
+              <div className="relative flex-1 overflow-hidden">
+                <div className="h-full w-full overflow-y-auto">
+                  <CaseStudyComponent />
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <footer className="py-10">
         <div className="max-w-6xl mx-auto px-6 text-center text-sm text-slate-400">© {new Date().getFullYear()} Aniket Kumar — Built with React & Framer Motion</div>
