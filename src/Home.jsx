@@ -25,7 +25,7 @@ const PROJECTS = [
   {
     title: 'Therapy.ai',
     desc: 'Built a multilingual, HIPAA-aware mental health companion with empathetic LLM conversations, crisis response, and lifelike avatar interactions.',
-    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/therapy.png',
     github: 'https://github.com/NidhiChoudhary7/Therapy.ai',
     demo: 'https://devpost.com/software/harmoni-ai',
     category: 'ai-ml',
@@ -37,20 +37,13 @@ const PROJECTS = [
   {
     title: 'AskDB',
     desc: 'Developed an AI agent that turns natural language into optimized queries across LangChain, Neo4j, RAG, FastAPI, ChromaDB, MongoDB, Azure SQL, Redis, and ReactJS—powering 50+ non-technical teammates and cutting report creation time by 75%.',
-    image: 'https://images.unsplash.com/photo-1526378722484-cc5c51000c89?auto=format&fit=crop&w=1200&q=80',
+    image: '/images/AskDB.png',
     category: 'ai-ml',
+    github: 'https://github.com/Anikkk/AskDB',
     caseStudy: {
       label: 'Case Study',
       component: AskDBCaseStudy
     }
-  },
-  {
-    title: 'Price Forecasting Dashboard',
-    desc: 'End-to-end ML dashboard for commodity forecasting',
-    image: '/images/dashboard.png',
-    category: 'ai-ml',
-    github: 'https://github.com/Anikkk/forecast-dashboard',
-    demo: 'https://yourdomain.com/dashboard'
   }
 ];
 
@@ -441,11 +434,15 @@ export default function Home() {
                 transition={{ duration: 0.3, ease: 'easeOut' }}
                 className="relative"
               >
-                <Card className="border border-white/6 shadow-lg">
-                  <div className="relative h-56 bg-gradient-to-br from-slate-700 to-slate-800">
-                    <img src={p.image} alt={p.title} className="w-full h-full object-cover opacity-90" />
+                <Card className="group flex h-full flex-col overflow-hidden border border-white/6 shadow-lg">
+                  <div className="relative aspect-[16/11] w-full bg-[#040b1c]">
+                    <img
+                      src={p.image}
+                      alt={p.title}
+                      className="absolute inset-0 h-full w-full object-contain object-center p-4 transition duration-300 ease-out"
+                    />
 
-                    <motion.div initial={{ opacity: 0 }} whileHover={{ opacity: 1 }} className="absolute inset-0 bg-black/50 flex items-center justify-center gap-4">
+                    <motion.div initial={{ opacity: 0 }} whileHover={{ opacity: 1 }} className="absolute inset-0 z-10 flex items-center justify-center gap-4 bg-black/50">
                       {hasCaseStudy && (
                         <button
                           type="button"
@@ -484,46 +481,44 @@ export default function Home() {
                     </motion.div>
                   </div>
 
-                  <CardContent>
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h3 className="text-lg font-semibold text-white">{p.title}</h3>
-                        <p className="text-sm text-slate-300 mt-2">{p.desc}</p>
-                        <div className="mt-4 flex flex-wrap items-center gap-3 text-xs font-medium uppercase tracking-[0.25em] text-slate-400/80">
-                          {hasCaseStudy && (
-                            <button
-                              type="button"
-                              onClick={() => handleOpenCaseStudy(p)}
-                              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 transition hover:border-emerald-300/50 hover:text-emerald-200"
-                            >
-                              <BookOpen size={14} />
-                              <span>{p.caseStudy?.label || 'Case Study'}</span>
-                            </button>
-                          )}
-                          {p.demo && (
-                            <a
-                              href={p.demo}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 transition hover:border-emerald-300/50 hover:text-emerald-200"
-                            >
-                              <ExternalLink size={14} />
-                              <span>Live Demo</span>
-                            </a>
-                          )}
-                          {p.github && (
-                            <a
-                              href={p.github}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 transition hover:border-emerald-300/50 hover:text-emerald-200"
-                            >
-                              <Github size={14} />
-                              <span>Code</span>
-                            </a>
-                          )}
-                        </div>
-                      </div>
+                  <CardContent className="flex flex-1 flex-col justify-between">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{p.title}</h3>
+                      <p className="mt-2 text-sm text-slate-300">{p.desc}</p>
+                    </div>
+                    <div className="mt-5 flex flex-wrap items-center gap-3 text-xs font-medium uppercase tracking-[0.25em] text-slate-400/80">
+                      {hasCaseStudy && (
+                        <button
+                          type="button"
+                          onClick={() => handleOpenCaseStudy(p)}
+                          className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 transition hover:border-emerald-300/50 hover:text-emerald-200"
+                        >
+                          <BookOpen size={14} />
+                          <span>{p.caseStudy?.label || 'Case Study'}</span>
+                        </button>
+                      )}
+                      {p.demo && (
+                        <a
+                          href={p.demo}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 transition hover:border-emerald-300/50 hover:text-emerald-200"
+                        >
+                          <ExternalLink size={14} />
+                          <span>Live Demo</span>
+                        </a>
+                      )}
+                      {p.github && (
+                        <a
+                          href={p.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 transition hover:border-emerald-300/50 hover:text-emerald-200"
+                        >
+                          <Github size={14} />
+                          <span>Code</span>
+                        </a>
+                      )}
                     </div>
                   </CardContent>
                 </Card>

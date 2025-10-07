@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const INTRO_PARAGRAPHS = [
   "AskDB began as an internal initiative to dissolve the bottleneck between business stakeholders and the analytics team. Non-technical users needed quick answers, but crafting SQL over fragmented data sources demanded scarce engineering time.",
@@ -69,12 +69,41 @@ const SECTION_DATA = [
   }
 ];
 
+const SCREENSHOTS = [
+  {
+    src: 'https://github.com/user-attachments/assets/0cb5ab6d-9667-403f-be02-585ef31e8765',
+    alt: 'AskDB agent answering natural language questions with suggested queries'
+  },
+  {
+    src: 'https://github.com/user-attachments/assets/77c5a657-0cf1-4493-8c82-3b13d40ffb39',
+    alt: 'AskDB architecture view highlighting integrations and data sources'
+  }
+];
+
 const RESOURCE_LINKS = [
   { label: 'Architecture Diagram', href: 'https://www.figma.com/file/example-askdb-architecture' },
   { label: 'Product One-Pager', href: 'https://docs.google.com/document/d/askdb-one-pager' }
 ];
 
 export default function AskDBCaseStudy() {
+  const [activeImage, setActiveImage] = useState(null);
+
+  useEffect(() => {
+    if (!activeImage) return;
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setActiveImage(null);
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [activeImage]);
+
+  const openImage = (image) => setActiveImage(image);
+  const closeImage = () => setActiveImage(null);
+
   return (
     <article className="mx-auto w-full max-w-4xl space-y-16 overflow-y-auto px-6 py-12 text-left text-slate-200">
       <header className="space-y-6">
@@ -96,6 +125,34 @@ export default function AskDBCaseStudy() {
           ))}
         </div>
       </header>
+
+      {SCREENSHOTS.length > 0 && (
+        <section className="space-y-4">
+          <h2 className="text-2xl font-semibold text-white md:text-3xl">01. Product Screens</h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            {SCREENSHOTS.map(image => (
+              <figure key={image.src} className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/40">
+                <button
+                  type="button"
+                  onClick={() => openImage(image)}
+                  className="group relative block h-full w-full"
+                >
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.015]"
+                    loading="lazy"
+                  />
+                  <span className="pointer-events-none absolute inset-0 bg-black/30 opacity-0 transition group-hover:opacity-100"></span>
+                </button>
+                <figcaption className="px-4 py-3 text-xs uppercase tracking-[0.25em] text-slate-400/80">
+                  {image.alt}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      )}
 
       {SECTION_DATA.map(section => (
         <section key={section.id} id={section.id} className="space-y-6">
@@ -126,6 +183,37 @@ export default function AskDBCaseStudy() {
             ))}
           </ul>
         </section>
+      )}
+
+      {activeImage && (
+        <div
+          className="fixed inset-0 z-[90] flex items-center justify-center bg-black/80 px-4"
+          onClick={closeImage}
+        >
+          <div
+            className="relative w-full max-w-5xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={closeImage}
+              aria-label="Close image preview"
+              className="absolute -top-4 -right-4 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-slate-100 transition hover:border-emerald-300/60 hover:text-emerald-200"
+            >
+              Close
+            </button>
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/70 p-3">
+              <img
+                src={activeImage.src}
+                alt={activeImage.alt}
+                className="max-h-[80vh] w-full rounded-xl object-contain"
+              />
+            </div>
+            <p className="mt-3 text-center text-xs uppercase tracking-[0.25em] text-slate-300">
+              {activeImage.alt}
+            </p>
+          </div>
+        </div>
       )}
     </article>
   );
