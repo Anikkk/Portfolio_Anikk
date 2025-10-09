@@ -6,6 +6,7 @@ import { Card, CardContent } from './components/ui/card';
 import TacoDBCaseStudy from './components/TacoDBCaseStudy';
 import TherapyAICaseStudy from './components/TherapyAICaseStudy';
 import AskDBCaseStudy from './components/AskDBCaseStudy';
+import ReinforcementLearningCaseStudy from './components/ReinforcementLearningCaseStudy';
 
 const PORTRAIT_SRC = '/images/profile_pic.jpg';
 
@@ -43,6 +44,18 @@ const PROJECTS = [
     caseStudy: {
       label: 'Case Study',
       component: AskDBCaseStudy
+    }
+  },
+  {
+    title: 'Reinforcement Learning Project',
+    desc: 'Engineered a modular RL toolkit covering SARSA, Q-Learning, DQN, and actor-critic pipelines with experiment tracking, visual analytics, and deployable inference endpoints.',
+    image: '/images/RL.png',
+    category: 'ai-ml',
+    github: 'https://github.com/Anikkk/reinforcement-learning-lab',
+    demo: 'https://reinforcement-lab-demo.vercel.app',
+    caseStudy: {
+      label: 'Deep Dive',
+      component: ReinforcementLearningCaseStudy
     }
   }
 ];
