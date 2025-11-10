@@ -7,6 +7,7 @@ import TacoDBCaseStudy from './components/TacoDBCaseStudy';
 import TherapyAICaseStudy from './components/TherapyAICaseStudy';
 import AskDBCaseStudy from './components/AskDBCaseStudy';
 import ReinforcementLearningCaseStudy from './components/ReinforcementLearningCaseStudy';
+import AdvancedRAGCaseStudy from './components/AdvancedRAGCaseStudy';
 
 const PORTRAIT_SRC = '/images/profile_pic.jpg';
 
@@ -21,6 +22,18 @@ const PROJECTS = [
     caseStudy: {
       label: 'Case Study',
       component: TacoDBCaseStudy
+    }
+  },
+  {
+    title: 'Advanced RAG with Reranking',
+    desc: 'Built a sophisticated retrieval-augmented generation system with semantic reranking, late Interaction, and cross-encoder models to improve answer accuracy by 40% over baseline RAG implementations.',
+    image: '/images/rag.png',
+    github: 'https://github.com/Anikkk/Advance_RAG',
+    demo: 'https://github.com/Anikkk/Advance_RAG/blob/master/reranking.ipynb',
+    category: 'ai-ml',
+    caseStudy: {
+      label: 'Deep Dive',
+      href: 'https://github.com/Anikkk/Advance_RAG/blob/master/reranking.ipynb'
     }
   },
   {
