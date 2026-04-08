@@ -83,8 +83,8 @@ const RESUME_PDF = '/images/Aniket_Kumar_Resume_2025.pdf';
 
 const EXPERIENCE = [
   {
-    role: 'ML Intern',
-    company: 'Velocity.AI',
+    role: 'Software Engineer Intern',
+    company: 'Velocity Road.ai',
     date: 'June 2025 - Aug 2025',
     logo: '/logos/velocity_road.jpeg',
     logoAlt: 'Velocity.AI logo',
@@ -95,35 +95,36 @@ const EXPERIENCE = [
       href: '/images/AniketKumar_RecommendationLetter.pdf'
     },
     bullets: [
-      'Workflow Automation:[n8n, LLMs, RAG] Automated meeting-transcript workflows with n8n, LLMs, and RAG, generating summaries, statements of work, and client proposals to streamline negotiations and help mid-scale enterprises adopt AI solutions.'
+      'AskDB - NLP Powered Database SQL Agent: (LangChain, LangGraph, Amazon RDS, FastAPI, RAG, Agentic workflow, Python) Built an AI agent that analyzes database tables and schemas, retrieves relevant data, and generates reports from user queries using LLMs and training examples, enabling 50+ non-technical users to self-serve data and cut report creation time by 75%.'
     ]
   },
   {
     role: 'Senior Software Engineer-2',
-    company: 'Applied Bell Curve',
-    date: 'Feb 2023 - Aug 2024',
-    logo: '/logos/ABC.png',
-    logoAlt: 'Applied Bell Curve logo',
-    handle: 'appliedbellcurve.com',
-    website: 'https://appliedbellcurve.com',
-    bullets: [
-      'Time Series Forecasting:[Supervised Learning, AWS] Designed and deployed a multi-model ML pipeline on AWS to predict seasonal cotton prices with 95% accuracy, enabling optimized purchasing strategies and saving $2.1M annually.',
-      'Containerization:[Kubernetes, Docker, Helm, Prometheus, Grafana, Distributed Systems, Fault Tolerant] Migrated 80% of applications to containers, reducing deployment errors by 50% and tripling release frequency, while implementing an observability platform for 100+ microservices that cut MTTR from 45 minutes to under 5 minutes.',
-      'API Optimization:[GraphQL, REST API, Flask, DynamoDB] Built GraphQL API layer using Apollo Federation to unify cotton data from 6 different sources, minimizing frontend API calls by 70% and improving page load time by 40%.'
-    ]
-  },
-  {
-    role: 'Software Engineer',
-    company: 'Wipro',
-    date: 'Aug 2020 - Nov 2023',
+    company: 'Wipro Technologies',
+    date: 'Sept 2023 - July 2024',
     logo: '/logos/wipro.svg',
     logoAlt: 'Wipro logo',
     handle: 'wipro.com',
     website: 'https://www.wipro.com',
     bullets: [
-      'ETL Modernization:[Pipeline Automation, Azure Data Factory, Azure Synapse, Airflow] Migrated legacy ETL workflows to Azure-native frameworks, orchestrating pipelines with Airflow and loading into Azure Synapse, improving data availability and reducing downtime by 60%',
-      'Data Pipeline Optimization:[Data Modeling, Parquet, Indexing Strategy] Introduced an indexing strategy to optimize Parquet queries, cutting query latency by 60% and increasing data pipeline throughput by 45%.',
-      'Leadership & Cross-Functional Collaboration: Led code and design reviews to uphold quality standards, resolved 100+ critical customer escalations via root-cause analysis, and mentored 4+ new hires on tools and workflows.'
+      'Time Series Forecasting: (Predictive Modelling, ML Ops Pipeline, Docker) Built an end-to-end time-series forecasting pipeline on AWS leveraging ARIMA, XGBoost, and LSTM ensembles to predict price trends. Improved forecast accuracy by 18% over baseline and optimized procurement timing, saving $2.1M annually.',
+      'Infrastructure Scaling & Traffic Surge Handling: (Go, Jenkins, AWS Secrets Manager, Cron) Designed horizontally scalable infrastructure with auto-scaling and load balancing to handle high traffic (1M+ RPM), improving system reliability and reducing tail latency under peak load.',
+      'Performance Optimization: (Golang, Python, gRPC, SQL, Typescript, ReactJS, HTML, CSS, JavaScript) Designed and optimized backend services for high-performance user-facing applications, reducing API latency to <40ms and improving responsiveness for end users.',
+      'API Optimization: (GraphQL, REST API) Built backend services and GraphQL APIs to power user-facing product features such as cart, promotions, and inventory, improving user experience and reducing frontend API calls by 70%.'
+    ]
+  },
+  {
+    role: 'Software Engineer',
+    company: 'Wipro Technologies',
+    date: 'Aug 2020 - Sept 2023',
+    logo: '/logos/wipro.svg',
+    logoAlt: 'Wipro logo',
+    handle: 'wipro.com',
+    website: 'https://www.wipro.com',
+    bullets: [
+      'Event-Driven Distributed Systems Data Pipeline: (SAP, Azure Data Factory, Azure Event Hubs, Azure Kubernetes Service) Led migration of 700M+ records by designing parallelized ETL pipelines in Azure Data Factory, leveraging partitioned data loads and automated scheduling. Enabled near real-time synchronization using Azure Event Hubs (15K+ events/sec), with microservices deployed on Azure Kubernetes Service ensuring scalable and fault-tolerant data consistency.',
+      'Cloud Infrastructure and Containerization: (CI/CD, Helm, Terraform, GitHub Actions, Spinnaker) Deployed apps (180+ containers) on Azure, automating auto-scaling and load balancing with Kubernetes. Handled 1M+ RPM with zero-downtime.',
+      'Reliability Engineering & Observability: (Alertmanager, ServiceNow, Grafana, Prometheus, Datadog) Improved reliability with real-time alerts and reduced costs by 20% by cutting memory usage 60% through Alpine Docker images.'
     ]
   }
 ];
