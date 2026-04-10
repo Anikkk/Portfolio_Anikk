@@ -79,7 +79,7 @@ const PROJECT_CATEGORIES = [
   { key: 'general', label: 'General Projects' }
 ];
 
-const RESUME_PDF = '/images/Aniket_Kumar_Resume_2025.pdf';
+const RESUME_PDF = '/images/1.pdf';
 
 const EXPERIENCE = [
   {
